@@ -7,11 +7,21 @@ const equipment = [
     {id: 1, name: 'คอมพิวเตอร์', category: 'computer'},
     {id: 2, name: 'ปริ้นเตอร์', category: 'printer'},
     {id: 3, name: 'คีย์บอร์ด', category: 'accessory'},
+    {id: 4, name: 'เมาส์', category: 'accessory'},
 ];
 
-app.get("/api/equipment", (req, res) => {
-    res.status(200).json(equipment);
+
+app.get("/api/equipment/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const result = equipment.find(e=>e.id==id);
+    if (result){
+        res.status(200).json(result)
+    
+    }else{ res.status(404).json({message: "ไม่เจอ"})
+
+    }
 });
+
 
 
 app.get("/api/equipment/getNum", (req, res) => {
@@ -22,24 +32,45 @@ app.get("/api/equipment/getNum", (req, res) => {
 
 
 
+app.get("/api/equipment",(req, res)=>{
+    const cat = req.query.category;
+    const result = cat?equipment.filter(e=>e.category === cat):equipment;
+    res.status(200).json(result);
+});
+   
 
 
-app.get("/", (req,res)=> {
-    res.send("kuy");
-})
-
-
-app.get("/Myfriend", (req, res) => {
-    res.json([
-        { ชื่อเล่น: "นาย", แม่: "แม่เลี้ยง" },
-        { ชื่อเล่น: "ภู", แม่: "แม่บี", พ่อ: "วัด" },
-        { ชื่อเล่น: "เตเต้", แม่: "จืด", พ่อ: "ด๊อก" },
-        { ชื่อเล่น: "เก้า", แม่: "อ้อม", พ่อ: "โจ" },
-        { ชื่อเล่น: "องศา", อา: "บี" }
-    ]);
+app.get("/api/equipment/getNum", (req, res) => {
+    res.status(200).json({
+    num: equipment.length
+    });
 });
 
-app.listen(PORT, () => {
+
+
+app.get("/health",(req,res)=>{
+    res.status(200).json(
+        {
+            status: "OK",
+            message: "Server is running"
+        }
+    )})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    app.listen(PORT, () => {
     console.log(`Server is running
         on http://localhost:${PORT}`);
 })

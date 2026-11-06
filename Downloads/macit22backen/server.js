@@ -7,6 +7,8 @@ const equipment = [
     {id: 1, name: 'คอมพิวเตอร์', category: 'computer'},
     {id: 2, name: 'ปริ้นเตอร์', category: 'printer'},
     {id: 3, name: 'คีย์บอร์ด', category: 'accessory'},
+    {id: 4, name: 'เมาส์', category: 'accessory'},
+    
 ];
 
 app.get("/api/equipment", (req, res) => {
